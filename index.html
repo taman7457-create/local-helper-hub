@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Local Helper Hub - Service Booking Platform</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+    <script>
+        // Show popup if on a mobile device
+        if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            window.onload = function() {
+                setTimeout(function() {
+                    alert("For the best experience, please open this site on desktop site.");
+                }, 500);
+            };
+        }
+    </script>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo">Local Helper Hub</h1>
+            <ul class="nav-links">
+                <li><a href="#home">• Home</a></li>
+                <li><a href="#features">• Features</a></li>
+                <li><a href="#atm">• Nearby ATM</a></li>
+                <li><a href="#user">• User</a></li>
+                <li><a href="#payment">• Payment</a></li>
+                <li><a href="#contact">• Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>
+                <span style="color:#ffd700; font-family:'Playfair Display',serif; font-size:3.2rem; letter-spacing:2px; text-shadow:0 4px 24px #1a237e55;">
+                    ★ Trusted Local Services
+                </span>
+                <br>
+                <span style="color:#a3e66d; font-size:2rem; font-weight:500; text-shadow:0 2px 12px #00408588;">
+                    at Your Fingertips
+                </span>
+            </h1>
+            <p style="font-size:1.3rem; color:#fffbe6;">Book plumbers, electricians, tutors, and searching more services which available nearest to you.(all facilities available at one place).<br>Easy booking and secure payments.</p>
+            <a href="#features" class="btn">Explore Features</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2><span style="color:#ffd700;">Key Features</span></h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="https://img.icons8.com/ios-filled/50/ffd700/marker.png" alt="Geo-location" style="margin-bottom:12px;">
+                    <h3>Geo-location Search</h3>
+                    <p>Find service providers or nearby ATMs instantly using Google Maps API integration.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://img.icons8.com/ios-filled/50/ffd700/lock-2.png" alt="Secure Payments" style="margin-bottom:12px;">
+                    <h3>Secure Payments</h3>
+                    <p>Pay safely through Razorpay payment gateway.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://img.icons8.com/ios-filled/50/ffd700/user-group-man-man.png" alt="User Login" style="margin-bottom:12px;">
+                    <h3>User Login / Signup</h3>
+                    <p>Separate user section for managing services and bookings securely.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nearby ATM Section -->
+    <section id="atm" class="atm-section">
+        <div class="container">
+            <h2><span style="color:#ffd700;">Find Nearby ATM Machines</span></h2>
+            <button onclick="findNearbyATMs()" class="btn">Search Nearby ATMs</button>
+            <div id="atm-results"></div>
+        </div>
+    </section>
+
+    <!-- User Login / Signup Section -->
+    <section id="user" class="user-section">
+        <div class="container">
+            <h2><span style="color:#ffd700;">User Portal</span></h2>
+            <form action="/user-login" method="POST" class="form">
+                <label for="email" style="font-weight:600;">Email</label>
+                <input id="email" type="email" name="email" placeholder="Email" required />
+                <label for="password" style="font-weight:600;">Password</label>
+                <input id="password" type="password" name="password" placeholder="Password" required />
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p>New user? <a href="/signup" style="color:#ffd700;">Signup here</a></p>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section id="payment" class="payment-section">
+        <div class="container">
+            <h2><span style="color:#ffd700;">💳 Make Payment</span></h2>
+            <button id="payBtn" class="btn">
+                <img src="https://img.icons8.com/color/48/000000/razorpay.png" alt="Razorpay Icon" style="width:24px; vertical-align:middle; margin-right:8px;"/>
+                Pay Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2><span style="color:#ffd700;">Contact Us</span></h2>
+            <p>Email: <span style="color:#ffd700;">taman7457@gmail.com</span></p>
+            <p>
+                Phone: 
+                <a href="tel:+919876543210" style="color:#ffd700; font-weight:bold; text-decoration:none;">
+                    +91-9027544748
+                </a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 <span style="color:#ffd700;">Local Helper Hub</span>. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        document.getElementById('payBtn').onclick = function () {
+            var options = {
+                "key": "YOUR_RAZORPAY_KEY", // Replace with your actual Razorpay key
+                "amount": "50000",
+                "currency": "INR",
+                "name": "Local Helper Hub",
+                "description": "Service Booking Payment",
+                "handler": function (response){
+                    alert("Payment Successful: " + response.razorpay_payment_id);
+                },
+                "theme": { "color": "#004085" }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        function findNearbyATMs() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const query = `https://www.google.com/maps/search/ATM/@${lat},${lng},15z`;
+                    document.getElementById('atm-results').innerHTML = `
+                        <a href="${query}" target="_blank" class="btn">View Nearby ATMs on Google Maps</a>
+                    `;
+                });
+            } else {
+                alert("Geolocation not supported.");
+            }
+        }
+    </script>
+</body>
+
+</html>
