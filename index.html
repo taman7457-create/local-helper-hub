@@ -68,7 +68,7 @@
             <div class="feature-card">
                 <img src="https://img.icons8.com/ios-filled/50/ffd700/lock-2.png" alt="Secure Payments" style="margin-bottom:12px;">
                 <h3>Secure Payments</h3>
-                <p>Pay safely through Razorpay payment gateway.</p>
+                <p>Pay safely through Razorpay payment gateway,trusted by millions across india.</p>
                 <button class="btn" onclick="alert('Payment is secure via Razorpay!')">How Payment Works?</button>
             </div>
             <div class="feature-card">
@@ -88,6 +88,13 @@
                 <h3>Nearby CNG Station</h3>
                 <p>Locate the nearest CNG stations for your convenience.</p>
                 <button class="btn" onclick="findNearbyService('CNG Station')">Search Nearby CNG Station</button>
+            </div>
+            <!-- New Feature Card: Nearby Electrician -->
+            <div class="feature-card">
+                <img src="https://img.icons8.com/ios-filled/50/ffd700/electricity.png" alt="Nearby Electrician" style="margin-bottom:12px;">
+                <h3>Nearby Electrician</h3>
+                <p>Find skilled electricians available near your location instantly.</p>
+                <button class="btn" onclick="findNearbyService('Electrician')">Search Nearby Electrician</button>
             </div>
         </div>
     </div>
@@ -176,6 +183,19 @@
                     document.getElementById('atm-results').innerHTML = `
                         <a href="${query}" target="_blank" class="btn">View Nearby ATMs on Google Maps</a>
                     `;
+                });
+            } else {
+                alert("Geolocation not supported.");
+            }
+        }
+
+        function findNearbyService(service) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const query = `https://www.google.com/maps/search/${encodeURIComponent(service)}/@${lat},${lng},15z`;
+                    window.open(query, '_blank');
                 });
             } else {
                 alert("Geolocation not supported.");
